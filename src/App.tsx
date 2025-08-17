@@ -9,9 +9,6 @@ import ClientMenu from "./pages/ClientMenu";
 import KDS from "./pages/KDS";
 import Staff from "./pages/Staff";
 import Admin from "./pages/Admin";
-import ProductCatalog from "./pages/ProductCatalog";
-import ProductForm from "./pages/ProductForm";
-import QRCodeGenerator from "./pages/QRCodeGenerator";
 import Dashboard from "./pages/Dashboard";
 import DesignSystem from "./pages/DesignSystem";
 
@@ -29,10 +26,6 @@ const App = () => (
           <Route path="/kds" element={<KDS />} />
           <Route path="/staff" element={<Staff />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/products" element={<ProductCatalog />} />
-          <Route path="/admin/products/new" element={<ProductForm />} />
-          <Route path="/admin/products/edit/:id" element={<ProductForm />} />
-          <Route path="/admin/qr-codes" element={<QRCodeGenerator />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/design-system" element={<DesignSystem />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
