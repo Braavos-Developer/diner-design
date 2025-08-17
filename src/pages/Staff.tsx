@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
 import { Button } from '@/design/components/atoms/Button';
@@ -21,7 +22,8 @@ import {
   AlertTriangle,
   Settings,
   Grid3X3,
-  List
+  List,
+  ArrowLeft
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -85,6 +87,12 @@ const Staff: React.FC = () => {
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
+              <Link to="/">
+                <Button variant="ghost" size="sm">
+                  <ArrowLeft className="w-4 h-4 mr-2" />
+                  Voltar
+                </Button>
+              </Link>
               <div className="flex items-center gap-3">
                 <Users className="w-8 h-8 text-primary" />
                 <div>
