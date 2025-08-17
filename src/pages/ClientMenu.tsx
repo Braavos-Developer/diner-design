@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
 import { Button } from '@/design/components/atoms/Button';
@@ -17,7 +17,8 @@ import {
   Shield, 
   Clock,
   AlertTriangle,
-  Users
+  Users,
+  ArrowLeft
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 
@@ -60,6 +61,11 @@ const ClientMenu: React.FC = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
+              <Link to="/">
+                <Button variant="ghost" size="sm">
+                  <ArrowLeft className="w-4 h-4" />
+                </Button>
+              </Link>
               <div className="flex items-center gap-2">
                 <div className="w-10 h-10 bg-gradient-brand rounded-full flex items-center justify-center text-white font-bold">
                   {tableNumber}

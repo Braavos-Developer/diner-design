@@ -1,19 +1,29 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
+import { Button } from '@/design/components/atoms/Button';
 import { mockKPIs } from '@/mocks/dashboard';
-import { BarChart3, TrendingUp } from 'lucide-react';
+import { BarChart3, TrendingUp, ArrowLeft } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border bg-background/95 backdrop-blur">
         <div className="container mx-auto px-6 py-4">
-          <div className="flex items-center gap-3">
-            <BarChart3 className="w-8 h-8 text-primary" />
-            <div>
-              <h1 className="text-2xl font-bold text-primary">Dashboard</h1>
-              <p className="text-sm text-muted-foreground">Análise de vendas e performance</p>
+          <div className="flex items-center gap-4">
+            <Link to="/">
+              <Button variant="ghost" size="sm">
+                <ArrowLeft className="w-4 h-4 mr-2" />
+                Voltar
+              </Button>
+            </Link>
+            <div className="flex items-center gap-3">
+              <BarChart3 className="w-8 h-8 text-primary" />
+              <div>
+                <h1 className="text-2xl font-bold text-primary">Dashboard</h1>
+                <p className="text-sm text-muted-foreground">Análise de vendas e performance</p>
+              </div>
             </div>
           </div>
         </div>
