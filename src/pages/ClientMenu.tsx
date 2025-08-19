@@ -1,10 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
 import { Button } from '@/design/components/atoms/Button';
 import { ProductCard } from '@/design/components/molecules/ProductCard';
 import { CategoryTabs } from '@/design/components/molecules/CategoryTabs';
+import { CallWaiterModal } from '@/components/modals/CallWaiterModal';
+import { FloatingCallButton } from '@/components/molecules/FloatingCallButton';
 import { 
   categories, 
   menuItems, 
@@ -18,9 +20,12 @@ import {
   Clock,
   AlertTriangle,
   Users,
-  ArrowLeft
+  ArrowLeft,
+  Send
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { realTimeService, RealtimeCall } from '@/services/realTimeService';
+import { toast } from '@/hooks/use-toast';
 
 const ClientMenu: React.FC = () => {
   const { token } = useParams<{ token: string }>();
@@ -28,6 +33,30 @@ const ClientMenu: React.FC = () => {
   const [cart, setCart] = useState<MenuItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [isCallWaiterOpen, setIsCallWaiterOpen] = useState(false);
+  const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
+  const [activeCalls, setActiveCalls] = useState<RealtimeCall[]>([]);
+
+  // Load active calls for this table
+  useEffect(() => {
+    const updateCalls = () => {
+      const calls = realTimeService.getCalls();
+      const tableCalls = calls.filter(call => 
+        call.tableNumber === tableNumber && call.status === 'pending'
+      );
+      setActiveCalls(tableCalls);
+    };
+
+    // Initial load
+    updateCalls();
+
+    // Subscribe to updates
+    realTimeService.on('calls_updated', updateCalls);
+
+    return () => {
+      realTimeService.off('calls_updated', updateCalls);
+    };
+  }, []);
 
   // Extract table number from token (mock)
   const tableNumber = token?.includes('mesa-') 
@@ -52,6 +81,53 @@ const ClientMenu: React.FC = () => {
       style: 'currency',
       currency: 'BRL'
     }).format(price);
+  };
+
+  const handleSubmitOrder = async () => {
+    if (cart.length === 0) return;
+
+    setIsSubmittingOrder(true);
+    
+    try {
+      const orderItems = cart.map((item, index) => ({
+        id: `item-${Date.now()}-${index}`,
+        menuItemId: item.id,
+        name: item.name,
+        quantity: 1,
+        unitPrice: item.price,
+        totalPrice: item.price,
+        allergens: item.allergens
+      }));
+
+      const subtotal = cartTotal;
+      const serviceCharge = subtotal * 0.1; // 10% service charge
+      const total = subtotal + serviceCharge;
+
+      realTimeService.addOrder({
+        tableNumber,
+        items: orderItems,
+        status: 'pending',
+        station: 'kitchen', // Simplified - in real app would determine based on items
+        total,
+      });
+
+      toast({
+        title: "Pedido enviado!",
+        description: `Seu pedido da Mesa ${tableNumber} foi enviado para a cozinha.`,
+      });
+
+      // Clear cart and close
+      setCart([]);
+      setIsCartOpen(false);
+    } catch (error) {
+      toast({
+        title: "Erro",
+        description: "Não foi possível enviar o pedido. Tente novamente.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubmittingOrder(false);
+    }
   };
 
   return (
@@ -79,7 +155,12 @@ const ClientMenu: React.FC = () => {
 
             <div className="flex items-center gap-2">
               {/* Call Waiter Button */}
-              <Button variant="outline" size="sm" className="gap-2">
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="gap-2"
+                onClick={() => setIsCallWaiterOpen(true)}
+              >
                 <Phone className="w-4 h-4" />
                 <span className="hidden sm:inline">Chamar</span>
               </Button>
@@ -212,9 +293,24 @@ const ClientMenu: React.FC = () => {
                       <span>{formatPrice(cartTotal)}</span>
                     </div>
 
-                    <Button variant="hero" size="lg" className="w-full">
-                      <Users className="w-4 h-4 mr-2" />
-                      Enviar Pedido - Mesa {tableNumber}
+                    <Button 
+                      variant="hero" 
+                      size="lg" 
+                      className="w-full"
+                      onClick={handleSubmitOrder}
+                      disabled={isSubmittingOrder}
+                    >
+                      {isSubmittingOrder ? (
+                        <div className="flex items-center gap-2">
+                          <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                          Enviando...
+                        </div>
+                      ) : (
+                        <div className="flex items-center gap-2">
+                          <Send className="w-4 h-4" />
+                          Enviar Pedido - Mesa {tableNumber}
+                        </div>
+                      )}
                     </Button>
 
                     <p className="text-xs text-muted-foreground text-center">
@@ -296,6 +392,19 @@ const ClientMenu: React.FC = () => {
           </Card>
         </div>
       )}
+
+      {/* Call Waiter Modal */}
+      <CallWaiterModal
+        isOpen={isCallWaiterOpen}
+        onClose={() => setIsCallWaiterOpen(false)}
+        tableNumber={tableNumber}
+      />
+
+      {/* Floating Call Button */}
+      <FloatingCallButton
+        onClick={() => setIsCallWaiterOpen(true)}
+        hasActiveCall={activeCalls.length > 0}
+      />
     </div>
   );
 };

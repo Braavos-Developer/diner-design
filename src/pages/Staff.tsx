@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
@@ -6,11 +6,9 @@ import { Button } from '@/design/components/atoms/Button';
 import { TableTile } from '@/design/components/molecules/TableTile';
 import { 
   mockTables, 
-  mockWaiterCalls, 
   Table, 
   WaiterCall,
   getTablesByStatus,
-  getPendingCalls,
   formatCallElapsedTime,
   getCallPriorityColor
 } from '@/mocks/tables';
@@ -23,61 +21,82 @@ import {
   Settings,
   Grid3X3,
   List,
-  ArrowLeft
+  ArrowLeft,
+  Bell
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { realTimeService, RealtimeCall } from '@/services/realTimeService';
 
 const Staff: React.FC = () => {
   const [tables, setTables] = useState(mockTables);
-  const [calls, setCalls] = useState(mockWaiterCalls);
+  const [calls, setCalls] = useState<RealtimeCall[]>([]);
   const [selectedTable, setSelectedTable] = useState<Table | null>(null);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+
+  // Load real-time data
+  useEffect(() => {
+    // Initial load
+    setCalls(realTimeService.getCalls());
+
+    // Subscribe to real-time updates
+    const handleCallsUpdate = (updatedCalls: RealtimeCall[]) => {
+      setCalls(updatedCalls);
+    };
+
+    realTimeService.on('calls_updated', handleCallsUpdate);
+
+    return () => {
+      realTimeService.off('calls_updated', handleCallsUpdate);
+    };
+  }, []);
 
   const occupiedTables = getTablesByStatus('occupied');
   const availableTables = getTablesByStatus('available');
   const serviceTables = getTablesByStatus('needs_service');
-  const pendingCalls = getPendingCalls();
+  const pendingCalls = calls.filter(call => call.status === 'pending');
+  const urgentCalls = calls.filter(call => call.priority === 'urgent' && call.status === 'pending');
 
   const handleTableSelect = (table: Table) => {
     setSelectedTable(table);
   };
 
   const handleCallAction = (callId: string, action: 'attend' | 'resolve') => {
-    setCalls(prev => prev.map(call => 
-      call.id === callId
-        ? {
-            ...call,
-            status: action === 'attend' ? 'attending' : 'resolved',
-            respondedAt: action === 'attend' ? new Date() : call.respondedAt,
-            resolvedAt: action === 'resolve' ? new Date() : call.resolvedAt,
-            assignedWaiterId: action === 'attend' ? 'waiter-001' : call.assignedWaiterId
-          }
-        : call
-    ));
+    realTimeService.updateCallStatus(
+      callId, 
+      action === 'attend' ? 'attending' : 'resolved'
+    );
   };
 
-  const getCallTypeIcon = (type: WaiterCall['type']) => {
+  const getCallTypeIcon = (type: RealtimeCall['type']) => {
     switch (type) {
       case 'water': return '💧';
       case 'utensils': return '🍴';
       case 'bill': return '💰';
       case 'assistance': return '🆘';
       case 'complaint': return '😞';
-      case 'order_ready': return '🍽️';
       default: return '📞';
     }
   };
 
-  const getCallTypeLabel = (type: WaiterCall['type']) => {
+  const getCallTypeLabel = (type: RealtimeCall['type']) => {
     switch (type) {
       case 'water': return 'Água';
       case 'utensils': return 'Utensílios';
       case 'bill': return 'Conta';
       case 'assistance': return 'Assistência';
       case 'complaint': return 'Reclamação';
-      case 'order_ready': return 'Pedido Pronto';
       default: return 'Chamada';
     }
+  };
+
+  const formatElapsedTime = (createdAt: Date): string => {
+    const minutes = Math.floor((Date.now() - createdAt.getTime()) / (1000 * 60));
+    if (minutes < 60) {
+      return `${minutes}min`;
+    }
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins.toString().padStart(2, '0')}min`;
   };
 
   return (
@@ -101,21 +120,13 @@ const Staff: React.FC = () => {
                 </div>
               </div>
 
-              {/* Quick Stats */}
-              <div className="flex gap-4">
-                <div className="flex items-center gap-2">
-                  <Badge variant="default">{availableTables.length}</Badge>
-                  <span className="text-sm text-muted-foreground">Livres</span>
+              {/* Call Alert */}
+              {urgentCalls.length > 0 && (
+                <div className="flex items-center gap-2 text-destructive animate-pulse">
+                  <Bell className="w-5 h-5" />
+                  <Badge variant="destructive">{urgentCalls.length} URGENTE</Badge>
                 </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="default">{occupiedTables.length}</Badge>
-                  <span className="text-sm text-muted-foreground">Ocupadas</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <Badge variant="warning">{serviceTables.length}</Badge>
-                  <span className="text-sm text-muted-foreground">Serviço</span>
-                </div>
-              </div>
+              )}
             </div>
 
             <div className="flex items-center gap-3">
@@ -236,10 +247,10 @@ const Staff: React.FC = () => {
                 <Card 
                   key={call.id} 
                   variant={call.status === 'pending' ? 'brand' : 'default'}
-                  className={cn(
-                    'p-4 space-y-3',
-                    call.priority === 'urgent' && call.status === 'pending' && 'ring-2 ring-destructive/30 animate-pulse'
-                  )}
+                     className={cn(
+                       'p-4 space-y-3',
+                       call.priority === 'urgent' && call.status === 'pending' && 'ring-2 ring-destructive/50 animate-pulse bg-destructive/5'
+                     )}
                 >
                   {/* Call Header */}
                   <div className="flex items-center justify-between">
@@ -266,8 +277,8 @@ const Staff: React.FC = () => {
 
                     <div className="flex items-center gap-2 text-xs text-muted-foreground">
                       <Clock className="w-3 h-3" />
-                      <span>{formatCallElapsedTime(call.elapsedTime)}</span>
-                      {call.elapsedTime > call.estimatedResponseTime && (
+                      <span>{formatElapsedTime(call.createdAt)}</span>
+                      {((Date.now() - call.createdAt.getTime()) / (1000 * 60)) > 5 && (
                         <AlertTriangle className="w-3 h-3 text-destructive" />
                       )}
                     </div>

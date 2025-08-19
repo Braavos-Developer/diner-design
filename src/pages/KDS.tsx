@@ -1,28 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Badge } from '@/design/components/atoms/Badge';
 import { Button } from '@/design/components/atoms/Button';
-import { KDSTicket } from '@/design/components/molecules/KDSTicket';
-import { 
-  mockKDSTickets, 
-  getTicketsByStatus, 
-  KDSTicket as KDSTicketType 
-} from '@/mocks/orders';
+import { OrderTicket } from '@/components/molecules/OrderTicket';
 import { 
   ChefHat, 
   Clock, 
   AlertTriangle, 
   Filter,
   RefreshCw,
-  ArrowLeft
+  ArrowLeft,
+  Package
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
+import { realTimeService, RealtimeOrder } from '@/services/realTimeService';
 
 const KDS: React.FC = () => {
-  const [tickets, setTickets] = useState(mockKDSTickets);
+  const [orders, setOrders] = useState<RealtimeOrder[]>([]);
   const [selectedStation, setSelectedStation] = useState<string>('all');
   const [refreshing, setRefreshing] = useState(false);
+
+  // Load real-time data
+  useEffect(() => {
+    // Initial load
+    setOrders(realTimeService.getOrders());
+
+    // Subscribe to real-time updates
+    const handleOrdersUpdate = (updatedOrders: RealtimeOrder[]) => {
+      setOrders(updatedOrders);
+    };
+
+    realTimeService.on('orders_updated', handleOrdersUpdate);
+
+    return () => {
+      realTimeService.off('orders_updated', handleOrdersUpdate);
+    };
+  }, []);
 
   const stations = [
     { id: 'all', name: 'Todas', icon: '🍽️' },
@@ -31,27 +45,21 @@ const KDS: React.FC = () => {
     { id: 'dessert', name: 'Sobremesas', icon: '🍰' }
   ];
 
-  const filteredTickets = selectedStation === 'all' 
-    ? tickets 
-    : tickets.filter(ticket => ticket.station === selectedStation);
+  const filteredOrders = selectedStation === 'all' 
+    ? orders 
+    : orders.filter(order => order.station === selectedStation);
 
-  const pendingTickets = filteredTickets.filter(t => t.status === 'pending');
-  const preparingTickets = filteredTickets.filter(t => t.status === 'preparing');
-  const readyTickets = filteredTickets.filter(t => t.status === 'ready');
+  const pendingOrders = filteredOrders.filter(o => o.status === 'pending');
+  const preparingOrders = filteredOrders.filter(o => o.status === 'preparing');
+  const readyOrders = filteredOrders.filter(o => o.status === 'ready');
   
-  const overdueCount = filteredTickets.filter(t => t.isOverdue).length;
+  const overdueCount = filteredOrders.filter(o => {
+    const elapsedMinutes = (Date.now() - o.createdAt.getTime()) / (1000 * 60);
+    return elapsedMinutes > 30; // Consider overdue after 30 minutes
+  }).length;
 
-  const handleStatusChange = (ticketId: string, newStatus: KDSTicketType['status']) => {
-    setTickets(prev => prev.map(ticket => 
-      ticket.id === ticketId 
-        ? { 
-            ...ticket, 
-            status: newStatus,
-            startedAt: newStatus === 'preparing' && !ticket.startedAt ? new Date() : ticket.startedAt,
-            completedAt: newStatus === 'ready' ? new Date() : ticket.completedAt
-          }
-        : ticket
-    ));
+  const handleStatusChange = (orderId: string, newStatus: RealtimeOrder['status']) => {
+    realTimeService.updateOrderStatus(orderId, newStatus);
   };
 
   const handleRefresh = () => {
@@ -67,21 +75,21 @@ const KDS: React.FC = () => {
       case 'pending':
         return {
           title: 'Pendente',
-          count: pendingTickets.length,
+          count: pendingOrders.length,
           color: 'bg-warning/10 border-warning/20',
           headerColor: 'text-warning'
         };
       case 'preparing':
         return {
           title: 'Em Preparo',
-          count: preparingTickets.length,
+          count: preparingOrders.length,
           color: 'bg-primary/10 border-primary/20',
           headerColor: 'text-primary'
         };
       case 'ready':
         return {
           title: 'Pronto',
-          count: readyTickets.length,
+          count: readyOrders.length,
           color: 'bg-success/10 border-success/20',
           headerColor: 'text-success'
         };
@@ -183,15 +191,15 @@ const KDS: React.FC = () => {
             </Card>
             
             <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-280px)]">
-              {pendingTickets.map((ticket) => (
-                <KDSTicket
-                  key={ticket.id}
-                  ticket={ticket}
+              {pendingOrders.map((order) => (
+                <OrderTicket
+                  key={order.id}
+                  order={order}
                   onStatusChange={handleStatusChange}
                 />
               ))}
               
-              {pendingTickets.length === 0 && (
+              {pendingOrders.length === 0 && (
                 <Card className="p-8 text-center opacity-60">
                   <div className="space-y-2">
                     <div className="text-2xl">✅</div>
@@ -218,15 +226,15 @@ const KDS: React.FC = () => {
             </Card>
             
             <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-280px)]">
-              {preparingTickets.map((ticket) => (
-                <KDSTicket
-                  key={ticket.id}
-                  ticket={ticket}
+              {preparingOrders.map((order) => (
+                <OrderTicket
+                  key={order.id}
+                  order={order}
                   onStatusChange={handleStatusChange}
                 />
               ))}
               
-              {preparingTickets.length === 0 && (
+              {preparingOrders.length === 0 && (
                 <Card className="p-8 text-center opacity-60">
                   <div className="space-y-2">
                     <div className="text-2xl">⏳</div>
@@ -253,15 +261,15 @@ const KDS: React.FC = () => {
             </Card>
             
             <div className="space-y-4 overflow-y-auto max-h-[calc(100vh-280px)]">
-              {readyTickets.map((ticket) => (
-                <KDSTicket
-                  key={ticket.id}
-                  ticket={ticket}
+              {readyOrders.map((order) => (
+                <OrderTicket
+                  key={order.id}
+                  order={order}
                   onStatusChange={handleStatusChange}
                 />
               ))}
               
-              {readyTickets.length === 0 && (
+              {readyOrders.length === 0 && (
                 <Card className="p-8 text-center opacity-60">
                   <div className="space-y-2">
                     <div className="text-2xl">🎉</div>
