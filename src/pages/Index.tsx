@@ -1,16 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
+import { Card } from '@/design/components/atoms/Card';
+import { Button } from '@/design/components/atoms/Button';
 import { ChefHat, Users, BarChart3, Settings, Palette, Smartphone } from 'lucide-react';
-import { initializeRealTime } from '@/store/realTimeStore';
 
 const Index = () => {
-  useEffect(() => {
-    // Initialize real-time functionality
-    initializeRealTime();
-  }, []);
-
   return (
     <div className="min-h-screen bg-gradient-subtle flex flex-col">
       {/* Hero Section */}
@@ -30,132 +24,95 @@ const Index = () => {
         {/* Navigation Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           
-          {/* Cardápio Digital */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Smartphone className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/m/mesa-7-demo">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <Smartphone className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">Cardápio Digital</h2>
+                <h2 className="text-2xl font-bold">Cardápio Digital</h2>
                 <p className="text-muted-foreground">
-                  Experiência completa do cliente
+                  Experiência do cliente - Mesa 7 (Demo)
                 </p>
               </div>
-              <div className="space-y-3">
-                <Link to="/client/login">
-                  <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                    Acessar Mesa
-                  </Button>
-                </Link>
-                <Link to="/client/login?demo=1">
-                  <Button variant="outline" className="w-full">
-                    Mesa 7 (Demo)
-                  </Button>
-                </Link>
-              </div>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Acessar como Cliente
+              </Button>
+            </Card>
+          </Link>
 
-          {/* KDS - Cozinha */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <ChefHat className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/kds">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <ChefHat className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">KDS - Cozinha</h2>
+                <h2 className="text-2xl font-bold">KDS - Cozinha</h2>
                 <p className="text-muted-foreground">
                   Sistema de display para cozinha
                 </p>
               </div>
-              <Link to="/kds/login">
-                <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                  Abrir KDS
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Abrir KDS
+              </Button>
+            </Card>
+          </Link>
 
-          {/* Staff - Salão */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Users className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/staff">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <Users className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">Staff - Salão</h2>
+                <h2 className="text-2xl font-bold">Staff - Salão</h2>
                 <p className="text-muted-foreground">
                   Gestão de mesas e atendimento
                 </p>
               </div>
-              <Link to="/staff/login">
-                <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                  Área do Staff
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Área do Staff
+              </Button>
+            </Card>
+          </Link>
 
-          {/* Admin */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Settings className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/admin">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <Settings className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">Admin</h2>
+                <h2 className="text-2xl font-bold">Admin</h2>
                 <p className="text-muted-foreground">
-                  Gestão completa do sistema
+                  Catálogo e configurações
                 </p>
               </div>
-              <Link to="/admin/login">
-                <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                  Painel Admin
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Painel Admin
+              </Button>
+            </Card>
+          </Link>
 
-          {/* Dashboard */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <BarChart3 className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/dashboard">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <BarChart3 className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">Dashboard</h2>
+                <h2 className="text-2xl font-bold">Dashboard</h2>
                 <p className="text-muted-foreground">
                   Análises e relatórios
                 </p>
               </div>
-              <Link to="/dashboard">
-                <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                  Ver Dashboard
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Ver Dashboard
+              </Button>
+            </Card>
+          </Link>
 
-          {/* Design System */}
-          <Card className="group relative overflow-hidden rounded-2xl bg-gradient-subtle border-0 shadow-lg hover:shadow-brand transition-all duration-300 hover:-translate-y-1">
-            <CardContent className="p-8 text-center space-y-6">
-              <div className="w-20 h-20 mx-auto bg-gradient-brand rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                <Palette className="w-10 h-10 text-white" />
-              </div>
+          <Link to="/design-system">
+            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
+              <Palette className="w-16 h-16 text-primary mx-auto" />
               <div className="space-y-2">
-                <h2 className="text-2xl font-bold text-foreground">Design System</h2>
+                <h2 className="text-2xl font-bold">Design System</h2>
                 <p className="text-muted-foreground">
                   Componentes e tokens
                 </p>
               </div>
-              <Link to="/design-system">
-                <Button className="w-full bg-gradient-brand text-white hover:opacity-90 transition-opacity">
-                  Ver Componentes
-                </Button>
-              </Link>
-            </CardContent>
-          </Card>
+              <Button variant="hero" size="lg" className="w-full">
+                Ver Componentes
+              </Button>
+            </Card>
+          </Link>
         </div>
       </main>
     </div>
