@@ -7,19 +7,12 @@ const cardVariants = cva(
   {
     variants: {
       variant: {
-        default: 'border-border',
-        elevated: 'shadow-md hover:shadow-elegant border-wood/20',
-        glass: 'glass-effect border-wood/30',
-        warm: 'bg-gradient-subtle border-primary/20 shadow-sm',
-        interactive: 'hover-lift cursor-pointer hover:shadow-brand border-wood/20',
-        brand: 'border-primary/30 bg-primary/5 shadow-sm',
-        
-        // Variantes específicas do restaurante
-        terracota: 'border-primary/30 bg-primary/10 shadow-brand/50',
-        amber: 'border-accent/40 bg-accent/10 shadow-sm',
-        moss: 'border-success/30 bg-success/10 shadow-sm',
-        wood: 'border-wood/40 bg-wood/5 shadow-sm',
-        elegant: 'border-wood/20 bg-gradient-subtle shadow-elegant'
+        default: '',
+        elevated: 'shadow-md hover:shadow-lg',
+        glass: 'glass-effect border-white/20',
+        warm: 'bg-gradient-subtle border-primary/10',
+        interactive: 'hover-lift cursor-pointer',
+        brand: 'border-primary/20 bg-primary/5'
       },
       size: {
         sm: 'p-3',
@@ -31,8 +24,7 @@ const cardVariants = cva(
         default: 'rounded-lg',
         md: 'rounded-md',
         lg: 'rounded-xl',
-        xl: 'rounded-2xl',
-        soft: 'rounded-3xl'
+        xl: 'rounded-2xl'
       }
     },
     defaultVariants: {
