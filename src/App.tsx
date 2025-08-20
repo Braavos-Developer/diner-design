@@ -13,7 +13,6 @@ import ProductCatalog from "./pages/ProductCatalog";
 import ProductForm from "./pages/ProductForm";
 import QRCodeGenerator from "./pages/QRCodeGenerator";
 import Dashboard from "./pages/Dashboard";
-import DesignSystem from "./pages/DesignSystem";
 
 const queryClient = new QueryClient();
 
@@ -34,7 +33,6 @@ const App = () => (
           <Route path="/admin/products/edit/:id" element={<ProductForm />} />
           <Route path="/admin/qr-codes" element={<QRCodeGenerator />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/design-system" element={<DesignSystem />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

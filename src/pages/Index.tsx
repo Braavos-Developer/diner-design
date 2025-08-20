@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from '@/design/components/atoms/Card';
 import { Button } from '@/design/components/atoms/Button';
-import { ChefHat, Users, BarChart3, Settings, Palette, Smartphone } from 'lucide-react';
+import { ChefHat, Users, BarChart3, Settings, Smartphone } from 'lucide-react';
 
 const Index = () => {
   return (
@@ -22,7 +22,7 @@ const Index = () => {
         </div>
 
         {/* Navigation Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-4xl mx-auto">
           
           <Link to="/m/mesa-7-demo">
             <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
@@ -95,21 +95,6 @@ const Index = () => {
               </div>
               <Button variant="hero" size="lg" className="w-full">
                 Ver Dashboard
-              </Button>
-            </Card>
-          </Link>
-
-          <Link to="/design-system">
-            <Card variant="interactive" radius="xl" className="p-8 text-center space-y-4 hover-glow">
-              <Palette className="w-16 h-16 text-primary mx-auto" />
-              <div className="space-y-2">
-                <h2 className="text-2xl font-bold">Design System</h2>
-                <p className="text-muted-foreground">
-                  Componentes e tokens
-                </p>
-              </div>
-              <Button variant="hero" size="lg" className="w-full">
-                Ver Componentes
               </Button>
             </Card>
           </Link>
