@@ -4,20 +4,40 @@ import { cva, type VariantProps } from 'class-variance-authority';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0',
   {
     variants: {
       variant: {
-        default: 'bg-primary text-primary-foreground shadow hover:bg-primary/90',
+        // Botões primários com degradê horizontal Terracota → Âmbar
+        default: 'bg-gradient-primary text-white shadow-brand hover:shadow-elegant hover:scale-[1.02] transform',
+        
+        // Botões secundários com Verde Musgo
+        secondary: 'bg-success text-success-foreground shadow-sm hover:bg-success/80 hover:shadow-md',
+        
+        // Botão destrutivo usando Terracota mais intenso
         destructive: 'bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90',
-        outline: 'border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground',
-        secondary: 'bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80',
-        ghost: 'hover:bg-accent hover:text-accent-foreground',
-        link: 'text-primary underline-offset-4 hover:underline',
+        
+        // Outline com borda madeira
+        outline: 'border border-wood/40 bg-background shadow-sm hover:bg-secondary hover:text-foreground hover:border-wood/60',
+        
+        // Ghost com hover âmbar
+        ghost: 'hover:bg-accent/20 hover:text-accent-foreground',
+        
+        // Links com cor âmbar
+        link: 'text-accent underline-offset-4 hover:underline hover:text-accent-dark',
+        
         // Restaurant specific variants
-        hero: 'bg-gradient-brand text-white shadow-brand hover:shadow-lg hover:scale-105 transform transition-all duration-200',
-        warm: 'bg-gradient-warm text-foreground shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-200',
-        glass: 'glass-effect text-foreground hover:bg-white/20 dark:hover:bg-black/60 transition-all duration-200',
+        hero: 'bg-gradient-primary text-white shadow-brand hover:shadow-elegant hover:scale-105 transform',
+        warm: 'bg-gradient-warm text-white shadow-md hover:shadow-brand hover:-translate-y-0.5',
+        glass: 'glass-effect text-foreground hover:bg-secondary/60 hover:backdrop-blur-md',
+        
+        // Variantes específicas do restaurante
+        terracota: 'bg-primary text-primary-foreground shadow-sm hover:bg-primary-dark',
+        amber: 'bg-accent text-accent-foreground shadow-sm hover:bg-accent-dark',
+        moss: 'bg-success text-success-foreground shadow-sm hover:bg-success/80',
+        wood: 'bg-wood text-white shadow-sm hover:bg-wood-dark',
+        
+        // Estados de alerta
         success: 'bg-success text-success-foreground shadow-sm hover:bg-success/90',
         warning: 'bg-warning text-warning-foreground shadow-sm hover:bg-warning/90'
       },
@@ -25,7 +45,7 @@ const buttonVariants = cva(
         default: 'h-9 px-4 py-2',
         sm: 'h-8 rounded-md px-3 text-xs',
         lg: 'h-10 rounded-md px-8',
-        xl: 'h-12 rounded-lg px-10 text-base',
+        xl: 'h-12 rounded-lg px-10 text-base font-semibold',
         icon: 'h-9 w-9'
       }
     },

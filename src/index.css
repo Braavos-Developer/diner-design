@@ -6,57 +6,66 @@
 
 @layer base {
   :root {
-    /* Base Colors */
-    --background: 0 0% 95%;       /* White dishes and lighting */
-    --foreground: 0 0% 16%;       /* Black matte */
+    /* Base Colors - Sofisticado Restaurante */
+    --background: 0 0% 95%;          /* #F1F1F1 - Branco suave */
+    --foreground: 0 0% 16%;          /* #2A2A2A - Preto fosco */
 
     /* Surface Colors */
-    --card: 0 0% 98%;
-    --card-foreground: 0 0% 16%;
+    --card: 0 0% 98%;                /* Cartões mais claros */
+    --card-foreground: 0 0% 16%;     /* #2A2A2A - Preto fosco */
     --popover: 0 0% 98%;
     --popover-foreground: 0 0% 16%;
 
-    /* Brand Colors - Reddish Brick */
-    --primary: 20 64% 42%;        /* Reddish brick */
-    --primary-foreground: 0 0% 95%;
-    --primary-light: 20 64% 52%;  /* Lighter brick */
-    --primary-dark: 20 64% 32%;   /* Darker brick */
+    /* Brand Colors - Terracota Primária */
+    --primary: 20 64% 42%;           /* #B05E27 - Terracota/Tijolo */
+    --primary-foreground: 0 0% 95%;  /* #F1F1F1 - Branco suave */
+    --primary-light: 20 64% 52%;     /* Terracota mais clara */
+    --primary-dark: 20 64% 32%;      /* Terracota mais escura */
 
-    /* Accent Colors - Warm Amber Light */
-    --accent: 40 100% 75%;        /* Warm amber light */
-    --accent-foreground: 0 0% 16%;
-    --accent-light: 40 100% 85%;
-    --accent-dark: 40 100% 65%;
+    /* Accent Colors - Âmbar Dourado */
+    --accent: 40 100% 75%;           /* #FFD180 - Âmbar/Dourado suave */
+    --accent-foreground: 0 0% 16%;   /* #2A2A2A - Preto fosco */
+    --accent-light: 40 100% 85%;     /* Âmbar mais claro */
+    --accent-dark: 40 100% 65%;      /* Âmbar mais escuro */
 
     /* Supporting Colors */
-    --secondary: 35 39% 85%;      /* Light beige upholstery */
-    --secondary-foreground: 0 0% 16%;
-    --muted: 35 25% 68%;          /* Light gray floor */
-    --muted-foreground: 35 31% 37%; /* Dark wood */
+    --secondary: 35 39% 85%;         /* #E3D9CC - Bege claro */
+    --secondary-foreground: 0 0% 16%; /* #2A2A2A - Preto fosco */
+    --muted: 35 39% 85%;             /* #E3D9CC - Bege claro */
+    --muted-foreground: 35 31% 37%;  /* #7A6240 - Marrom madeira */
 
     /* Status Colors */
-    --success: 105 21% 35%;       /* Moss green */
-    --success-foreground: 0 0% 95%;
-    --warning: 40 100% 75%;       /* Warm amber */
-    --warning-foreground: 0 0% 16%;
-    --destructive: 0 75% 55%;     /* Keep red for errors */
-    --destructive-foreground: 0 0% 100%;
+    --success: 105 21% 35%;          /* #4E6B47 - Verde musgo */
+    --success-foreground: 0 0% 95%;  /* #F1F1F1 - Branco suave */
+    --warning: 40 100% 75%;          /* #FFD180 - Âmbar para alertas */
+    --warning-foreground: 0 0% 16%;  /* #2A2A2A - Preto fosco */
+    --destructive: 20 64% 50%;       /* Variação mais intensa do terracota */
+    --destructive-foreground: 0 0% 95%;
 
     /* UI Elements */
-    --border: 35 25% 78%;
-    --input: 35 39% 90%;
-    --ring: 20 64% 42%;
+    --border: 35 31% 37% / 0.3;      /* #7A6240 - Marrom madeira 30% opacidade */
+    --input: 35 39% 90%;             /* Bege mais claro para inputs */
+    --ring: 20 64% 42%;              /* #B05E27 - Terracota para focus */
 
-    /* Shadows & Effects */
-    --shadow-sm: 0 1px 2px hsl(0 0% 16% / 0.05);
-    --shadow-md: 0 4px 12px hsl(0 0% 16% / 0.1);
-    --shadow-lg: 0 12px 24px hsl(0 0% 16% / 0.15);
-    --shadow-brand: 0 8px 24px hsl(20 64% 42% / 0.25);
+    /* Wood Details */
+    --wood: 35 31% 37%;              /* #7A6240 - Marrom madeira */
+    --wood-light: 35 31% 47%;        /* Madeira mais clara */
+    --wood-dark: 35 31% 27%;         /* Madeira mais escura */
 
-    /* Gradients */
-    --gradient-brand: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-    --gradient-warm: linear-gradient(135deg, hsl(var(--accent-light)), hsl(var(--primary-light)));
-    --gradient-subtle: linear-gradient(180deg, hsl(var(--card)), hsl(var(--secondary)));
+    /* Shadows & Effects - Restaurante Sofisticado */
+    --shadow-sm: 0 1px 2px hsl(35 31% 37% / 0.1);      /* Sombras suaves com tom madeira */
+    --shadow-md: 0 4px 12px hsl(35 31% 37% / 0.15);
+    --shadow-lg: 0 12px 24px hsl(35 31% 37% / 0.2);
+    --shadow-brand: 0 8px 24px hsl(20 64% 42% / 0.3);  /* Sombra terracota para destaque */
+    --shadow-elegant: 0 20px 40px hsl(35 31% 37% / 0.25); /* Sombra elegante */
+
+    /* Gradientes Especiais Restaurante */
+    --gradient-primary: linear-gradient(90deg, hsl(20 64% 42%), hsl(40 100% 75%)); /* Terracota → Âmbar */
+    --gradient-brand: linear-gradient(135deg, hsl(20 64% 42%), hsl(40 100% 75%));
+    --gradient-warm: linear-gradient(135deg, hsl(40 100% 85%), hsl(20 64% 52%));
+    --gradient-subtle: linear-gradient(180deg, hsl(0 0% 98%), hsl(35 39% 85%));    /* Branco → Bege */
+    --gradient-wood: linear-gradient(135deg, hsl(35 31% 37%), hsl(35 31% 47%));    /* Gradiente madeira */
+    --gradient-moss: linear-gradient(135deg, hsl(105 21% 35%), hsl(105 21% 45%));  /* Gradiente verde musgo */
 
     /* Typography Scale */
     --font-size-xs: 0.75rem;      /* 12px */
@@ -91,74 +100,88 @@
     --transition-normal: 180ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Sidebar */
-    --sidebar-background: 35 39% 90%;    /* Light beige */
-    --sidebar-foreground: 0 0% 16%;      /* Black matte */
-    --sidebar-primary: 20 64% 42%;       /* Reddish brick */
+    /* Sidebar - Design Restaurante */
+    --sidebar-background: 35 39% 88%;    /* Bege claro sidebar */
+    --sidebar-foreground: 0 0% 16%;      /* #2A2A2A - Preto fosco */
+    --sidebar-primary: 20 64% 42%;       /* #B05E27 - Terracota */
     --sidebar-primary-foreground: 0 0% 95%;
-    --sidebar-accent: 35 39% 85%;        /* Light beige upholstery */
+    --sidebar-accent: 35 39% 85%;        /* #E3D9CC - Bege claro */
     --sidebar-accent-foreground: 0 0% 16%;
-    --sidebar-border: 35 25% 78%;
-    --sidebar-ring: 20 64% 42%;
+    --sidebar-border: 35 31% 37% / 0.3;  /* Marrom madeira com opacidade */
+    --sidebar-ring: 20 64% 42%;          /* Terracota para focus */
   }
 
   .dark {
-    /* Base Colors */
-    --background: 0 0% 16%;         /* Black matte */
-    --foreground: 35 25% 68%;       /* Light gray floor */
+    /* Base Colors - Modo Escuro Restaurante */
+    --background: 0 0% 16%;              /* #2A2A2A - Preto fosco */
+    --foreground: 35 39% 85%;            /* #E3D9CC - Bege claro para texto */
 
     /* Surface Colors */
-    --card: 35 31% 20%;             /* Darker wood tone */
-    --card-foreground: 35 25% 68%;
-    --popover: 35 31% 20%;
-    --popover-foreground: 35 25% 68%;
+    --card: 35 31% 22%;                  /* Tom madeira escuro para cards */
+    --card-foreground: 35 39% 85%;       /* Bege claro para texto */
+    --popover: 35 31% 22%;
+    --popover-foreground: 35 39% 85%;
 
-    /* Brand Colors - Adjusted for dark mode */
-    --primary: 20 64% 52%;          /* Brighter reddish brick */
-    --primary-foreground: 0 0% 95%;
-    --primary-light: 20 64% 62%;
-    --primary-dark: 20 64% 42%;
+    /* Brand Colors - Ajustado para modo escuro */
+    --primary: 20 64% 55%;               /* Terracota mais brilhante */
+    --primary-foreground: 0 0% 95%;      /* Branco suave */
+    --primary-light: 20 64% 65%;
+    --primary-dark: 20 64% 45%;
 
-    /* Accent Colors */
-    --accent: 40 100% 75%;          /* Warm amber light */
-    --accent-foreground: 0 0% 16%;
+    /* Accent Colors - Âmbar mantido */
+    --accent: 40 100% 75%;               /* #FFD180 - Âmbar mantido */
+    --accent-foreground: 0 0% 16%;       /* Preto fosco */
     --accent-light: 40 100% 85%;
     --accent-dark: 40 100% 65%;
 
     /* Supporting Colors */
-    --secondary: 35 31% 25%;        /* Dark wood variant */
-    --secondary-foreground: 35 25% 68%;
-    --muted: 35 31% 30%;            /* Darker muted */
-    --muted-foreground: 35 25% 60%;
+    --secondary: 35 31% 28%;             /* Madeira escura para secundário */
+    --secondary-foreground: 35 39% 85%;  /* Bege claro */
+    --muted: 35 31% 32%;                 /* Madeira escura muted */
+    --muted-foreground: 35 31% 60%;      /* Madeira clara para texto muted */
 
     /* Status Colors */
-    --success: 105 21% 45%;         /* Brighter moss green */
+    --success: 105 21% 45%;              /* Verde musgo mais brilhante */
     --success-foreground: 0 0% 95%;
-    --warning: 40 100% 75%;         /* Warm amber */
+    --warning: 40 100% 75%;              /* Âmbar mantido */
     --warning-foreground: 0 0% 16%;
-    --destructive: 0 75% 65%;
+    --destructive: 20 64% 60%;           /* Terracota mais intensa */
     --destructive-foreground: 0 0% 95%;
 
     /* UI Elements */
-    --border: 35 31% 35%;
-    --input: 35 31% 25%;
-    --ring: 20 64% 52%;
+    --border: 35 31% 40% / 0.4;          /* Madeira com mais opacidade */
+    --input: 35 31% 25%;                 /* Input madeira escura */
+    --ring: 20 64% 55%;                  /* Terracota mais brilhante para focus */
 
-    /* Shadows - Enhanced for dark mode */
-    --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.3);
-    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.4);
-    --shadow-lg: 0 12px 24px hsl(0 0% 0% / 0.5);
-    --shadow-brand: 0 8px 24px hsl(20 64% 52% / 0.3);
+    /* Wood Details Dark */
+    --wood: 35 31% 45%;                  /* Madeira mais clara no escuro */
+    --wood-light: 35 31% 55%;
+    --wood-dark: 35 31% 35%;
 
-    /* Sidebar */
-    --sidebar-background: 35 31% 18%;      /* Dark wood */
-    --sidebar-foreground: 35 25% 68%;      /* Light gray */
-    --sidebar-primary: 20 64% 52%;         /* Reddish brick */
+    /* Shadows - Aprimorado para modo escuro */
+    --shadow-sm: 0 1px 2px hsl(0 0% 0% / 0.4);
+    --shadow-md: 0 4px 12px hsl(0 0% 0% / 0.5);
+    --shadow-lg: 0 12px 24px hsl(0 0% 0% / 0.6);
+    --shadow-brand: 0 8px 24px hsl(20 64% 55% / 0.4);
+    --shadow-elegant: 0 20px 40px hsl(0 0% 0% / 0.5);
+
+    /* Gradientes para modo escuro */
+    --gradient-primary: linear-gradient(90deg, hsl(20 64% 55%), hsl(40 100% 75%));
+    --gradient-brand: linear-gradient(135deg, hsl(20 64% 55%), hsl(40 100% 75%));
+    --gradient-warm: linear-gradient(135deg, hsl(40 100% 75%), hsl(20 64% 65%));
+    --gradient-subtle: linear-gradient(180deg, hsl(35 31% 22%), hsl(35 31% 28%));
+    --gradient-wood: linear-gradient(135deg, hsl(35 31% 45%), hsl(35 31% 55%));
+    --gradient-moss: linear-gradient(135deg, hsl(105 21% 45%), hsl(105 21% 55%));
+
+    /* Sidebar Dark */
+    --sidebar-background: 35 31% 20%;    /* Madeira bem escura */
+    --sidebar-foreground: 35 39% 85%;    /* Bege claro */
+    --sidebar-primary: 20 64% 55%;       /* Terracota mais brilhante */
     --sidebar-primary-foreground: 0 0% 95%;
-    --sidebar-accent: 35 31% 25%;          /* Dark wood variant */
-    --sidebar-accent-foreground: 35 25% 68%;
-    --sidebar-border: 35 31% 35%;
-    --sidebar-ring: 20 64% 52%;
+    --sidebar-accent: 35 31% 28%;        /* Madeira escura */
+    --sidebar-accent-foreground: 35 39% 85%;
+    --sidebar-border: 35 31% 40% / 0.4;
+    --sidebar-ring: 20 64% 55%;
   }
 }
 
@@ -224,22 +247,51 @@
     @apply transition-all duration-200 hover:shadow-brand;
   }
 
-  /* Gradient utilities */
+  /* Gradient utilities - Restaurante Sofisticado */
+  .bg-gradient-primary {
+    background: var(--gradient-primary);   /* Terracota → Âmbar horizontal */
+  }
+
   .bg-gradient-brand {
-    background: var(--gradient-brand);
+    background: var(--gradient-brand);     /* Terracota → Âmbar diagonal */
   }
 
   .bg-gradient-warm {
-    background: var(--gradient-warm);
+    background: var(--gradient-warm);      /* Âmbar → Terracota */
   }
 
   .bg-gradient-subtle {
-    background: var(--gradient-subtle);
+    background: var(--gradient-subtle);    /* Branco → Bege */
   }
 
-  /* Glass morphism effect */
+  .bg-gradient-wood {
+    background: var(--gradient-wood);      /* Gradiente madeira */
+  }
+
+  .bg-gradient-moss {
+    background: var(--gradient-moss);      /* Gradiente verde musgo */
+  }
+
+  /* Glass morphism effect - Restaurante */
   .glass-effect {
-    @apply backdrop-blur-sm bg-white/80 dark:bg-black/40 border border-white/20;
+    @apply backdrop-blur-sm bg-secondary/80 dark:bg-card/60 border border-wood/20;
+  }
+
+  /* Restaurante specific utilities */
+  .wood-border {
+    @apply border-wood/30;
+  }
+
+  .terracota-text {
+    @apply text-primary;
+  }
+
+  .amber-text {
+    @apply text-accent;
+  }
+
+  .moss-text {
+    @apply text-success;
   }
 }
 
@@ -258,13 +310,61 @@
     @apply flex items-center justify-between;
   }
 
-  /* Shadow utilities */
+  /* Shadow utilities - Restaurante Sofisticado */
   .shadow-brand {
     box-shadow: var(--shadow-brand);
   }
 
   .shadow-elegant {
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-elegant);
+  }
+
+  .shadow-wood {
+    box-shadow: 0 4px 12px hsl(35 31% 37% / 0.2);
+  }
+
+  /* Interactive hover effects - Restaurante */
+  .hover-terracota {
+    @apply transition-all duration-200 hover:text-primary hover:scale-105;
+  }
+
+  .hover-amber {
+    @apply transition-all duration-200 hover:text-accent hover:drop-shadow-sm;
+  }
+
+  .hover-elegant {
+    @apply transition-all duration-300 hover:shadow-elegant hover:-translate-y-1;
+  }
+
+  /* Restaurant themed text utilities */
+  .text-restaurant-primary {
+    @apply text-primary font-semibold;
+  }
+
+  .text-restaurant-accent {
+    @apply text-accent font-medium;
+  }
+
+  .text-restaurant-muted {
+    @apply text-muted-foreground;
+  }
+
+  /* Border utilities */
+  .border-restaurant {
+    @apply border-wood/30;
+  }
+
+  .border-elegant {
+    @apply border-wood/20 border-2;
+  }
+
+  /* Background utilities */
+  .bg-restaurant-surface {
+    @apply bg-secondary/50;
+  }
+
+  .bg-restaurant-elevated {
+    @apply bg-gradient-subtle;
   }
 }
 
