@@ -64,6 +64,10 @@ export default {
 					DEFAULT: 'hsl(var(--warning))',
 					foreground: 'hsl(var(--warning-foreground))'
 				},
+				wood: {
+					DEFAULT: 'hsl(30 25% 45%)',
+					foreground: 'hsl(0 0% 100%)'
+				},
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',

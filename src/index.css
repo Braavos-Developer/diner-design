@@ -46,6 +46,10 @@
     --border: 45 25% 85%;
     --input: 45 25% 90%;
     --ring: 15 75% 55%;
+    
+    /* Wood Color */
+    --wood: 30 25% 45%;
+    --wood-foreground: 0 0% 100%;
 
     /* Shadows & Effects */
     --shadow-sm: 0 1px 2px hsl(25 25% 15% / 0.05);
