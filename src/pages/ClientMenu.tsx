@@ -21,18 +21,29 @@ import {
   AlertTriangle,
   Users,
   ArrowLeft,
-  Send
+  Send,
+  Plus,
+  Minus
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { realTimeService, RealtimeCall } from '@/services/realTimeService';
 import { toast } from '@/hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+
+interface CartItem extends MenuItem {
+  quantity: number;
+  observation?: string;
+}
 
 const ClientMenu: React.FC = () => {
   const { token } = useParams<{ token: string }>();
   const [activeCategory, setActiveCategory] = useState(categories[0].id);
-  const [cart, setCart] = useState<MenuItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
+  const [currentObservation, setCurrentObservation] = useState('');
   const [isCallWaiterOpen, setIsCallWaiterOpen] = useState(false);
   const [isSubmittingOrder, setIsSubmittingOrder] = useState(false);
   const [activeCalls, setActiveCalls] = useState<RealtimeCall[]>([]);
@@ -67,13 +78,20 @@ const ClientMenu: React.FC = () => {
   const cartTotal = cart.reduce((sum, item) => sum + item.price, 0);
   const cartItemCount = cart.length;
 
-  const handleAddToCart = (item: MenuItem) => {
-    setCart(prev => [...prev, item]);
+  const handleAddToCart = (item: MenuItem, observation: string = '') => {
+    const existingIndex = cart.findIndex(cartItem => 
+      cartItem.id === item.id && cartItem.observation === observation
+    );
+    
+    if (existingIndex >= 0) {
+      const newCart = [...cart];
+      newCart[existingIndex].quantity += 1;
+      setCart(newCart);
+    } else {
+      setCart(prev => [...prev, { ...item, quantity: 1, observation }]);
+    }
     setSelectedItem(null);
-  };
-
-  const handleRemoveFromCart = (index: number) => {
-    setCart(prev => prev.filter((_, i) => i !== index));
+    setCurrentObservation('');
   };
 
   const formatPrice = (price: number) => {

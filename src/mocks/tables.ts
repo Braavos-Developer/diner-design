@@ -18,6 +18,7 @@ export interface Table {
   };
   lastService?: Date;
   qrToken: string;
+  hasQRCode: boolean; // Added this field
 }
 
 export interface WaiterCall {
@@ -54,7 +55,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'A',
     position: { x: 1, y: 1 },
-    qrToken: 'mesa-1-qr001'
+    qrToken: 'mesa-1-qr001',
+    hasQRCode: true
   },
   {
     id: 'table-02',
@@ -69,7 +71,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 45 * 60 * 1000), // 45 minutes ago
       itemCount: 3
     },
-    qrToken: 'mesa-2-qr002'
+    qrToken: 'mesa-2-qr002',
+    hasQRCode: true
   },
   {
     id: 'table-03',
@@ -84,7 +87,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 25 * 60 * 1000), // 25 minutes ago
       itemCount: 1
     },
-    qrToken: 'mesa-3-qr003'
+    qrToken: 'mesa-3-qr003',
+    hasQRCode: false
   },
   {
     id: 'table-04',
@@ -93,7 +97,8 @@ export const mockTables: Table[] = [
     status: 'needs_service',
     section: 'A',
     position: { x: 4, y: 1 },
-    qrToken: 'mesa-4-qr004'
+    qrToken: 'mesa-4-qr004',
+    hasQRCode: true
   },
   {
     id: 'table-05',
@@ -102,7 +107,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'A',
     position: { x: 5, y: 1 },
-    qrToken: 'mesa-5-qr005'
+    qrToken: 'mesa-5-qr005',
+    hasQRCode: true
   },
   // Row 2
   {
@@ -112,7 +118,8 @@ export const mockTables: Table[] = [
     status: 'reserved',
     section: 'B',
     position: { x: 1, y: 2 },
-    qrToken: 'mesa-6-qr006'
+    qrToken: 'mesa-6-qr006',
+    hasQRCode: false
   },
   {
     id: 'table-07',
@@ -127,7 +134,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 60 * 60 * 1000), // 1 hour ago
       itemCount: 2
     },
-    qrToken: 'mesa-7-qr007'
+    qrToken: 'mesa-7-qr007',
+    hasQRCode: true
   },
   {
     id: 'table-08',
@@ -142,7 +150,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 35 * 60 * 1000), // 35 minutes ago
       itemCount: 6
     },
-    qrToken: 'mesa-8-qr008'
+    qrToken: 'mesa-8-qr008',
+    hasQRCode: true
   },
   {
     id: 'table-09',
@@ -152,7 +161,8 @@ export const mockTables: Table[] = [
     section: 'B',
     position: { x: 4, y: 2 },
     lastService: new Date(Date.now() - 10 * 60 * 1000), // 10 minutes ago
-    qrToken: 'mesa-9-qr009'
+    qrToken: 'mesa-9-qr009',
+    hasQRCode: false
   },
   {
     id: 'table-10',
@@ -161,7 +171,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'B',
     position: { x: 5, y: 2 },
-    qrToken: 'mesa-10-qr010'
+    qrToken: 'mesa-10-qr010',
+    hasQRCode: true
   },
   // Row 3
   {
@@ -171,7 +182,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'C',
     position: { x: 1, y: 3 },
-    qrToken: 'mesa-11-qr011'
+    qrToken: 'mesa-11-qr011',
+    hasQRCode: true
   },
   {
     id: 'table-12',
@@ -186,7 +198,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 20 * 60 * 1000), // 20 minutes ago
       itemCount: 2
     },
-    qrToken: 'mesa-12-qr012'
+    qrToken: 'mesa-12-qr012',
+    hasQRCode: true
   },
   {
     id: 'table-13',
@@ -195,7 +208,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'C',
     position: { x: 3, y: 3 },
-    qrToken: 'mesa-13-qr013'
+    qrToken: 'mesa-13-qr013',
+    hasQRCode: false
   },
   {
     id: 'table-14',
@@ -204,7 +218,8 @@ export const mockTables: Table[] = [
     status: 'out_of_order',
     section: 'C',
     position: { x: 4, y: 3 },
-    qrToken: 'mesa-14-qr014'
+    qrToken: 'mesa-14-qr014',
+    hasQRCode: false
   },
   {
     id: 'table-15',
@@ -213,7 +228,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'C',
     position: { x: 5, y: 3 },
-    qrToken: 'mesa-15-qr015'
+    qrToken: 'mesa-15-qr015',
+    hasQRCode: true
   },
   // Row 4
   {
@@ -223,7 +239,8 @@ export const mockTables: Table[] = [
     status: 'reserved',
     section: 'D',
     position: { x: 1, y: 4 },
-    qrToken: 'mesa-16-qr016'
+    qrToken: 'mesa-16-qr016',
+    hasQRCode: true
   },
   {
     id: 'table-17',
@@ -232,7 +249,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'D',
     position: { x: 2, y: 4 },
-    qrToken: 'mesa-17-qr017'
+    qrToken: 'mesa-17-qr017',
+    hasQRCode: true
   },
   {
     id: 'table-18',
@@ -241,7 +259,8 @@ export const mockTables: Table[] = [
     status: 'needs_service',
     section: 'D',
     position: { x: 3, y: 4 },
-    qrToken: 'mesa-18-qr018'
+    qrToken: 'mesa-18-qr018',
+    hasQRCode: true
   },
   {
     id: 'table-19',
@@ -250,7 +269,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'D',
     position: { x: 4, y: 4 },
-    qrToken: 'mesa-19-qr019'
+    qrToken: 'mesa-19-qr019',
+    hasQRCode: false
   },
   {
     id: 'table-20',
@@ -265,7 +285,8 @@ export const mockTables: Table[] = [
       startTime: new Date(Date.now() - 40 * 60 * 1000), // 40 minutes ago
       itemCount: 4
     },
-    qrToken: 'mesa-20-qr020'
+    qrToken: 'mesa-20-qr020',
+    hasQRCode: true
   },
   // Row 5
   {
@@ -275,7 +296,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'E',
     position: { x: 1, y: 5 },
-    qrToken: 'mesa-21-qr021'
+    qrToken: 'mesa-21-qr021',
+    hasQRCode: true
   },
   {
     id: 'table-22',
@@ -284,7 +306,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'E',
     position: { x: 2, y: 5 },
-    qrToken: 'mesa-22-qr022'
+    qrToken: 'mesa-22-qr022',
+    hasQRCode: false
   },
   {
     id: 'table-23',
@@ -294,7 +317,8 @@ export const mockTables: Table[] = [
     section: 'E',
     position: { x: 3, y: 5 },
     lastService: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
-    qrToken: 'mesa-23-qr023'
+    qrToken: 'mesa-23-qr023',
+    hasQRCode: false
   },
   {
     id: 'table-24',
@@ -303,7 +327,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'E',
     position: { x: 4, y: 5 },
-    qrToken: 'mesa-24-qr024'
+    qrToken: 'mesa-24-qr024',
+    hasQRCode: true
   },
   {
     id: 'table-25',
@@ -312,7 +337,8 @@ export const mockTables: Table[] = [
     status: 'available',
     section: 'E',
     position: { x: 5, y: 5 },
-    qrToken: 'mesa-25-qr025'
+    qrToken: 'mesa-25-qr025',
+    hasQRCode: true
   }
 ];
 

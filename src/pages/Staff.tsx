@@ -50,9 +50,11 @@ const Staff: React.FC = () => {
     };
   }, []);
 
-  const occupiedTables = getTablesByStatus('occupied');
-  const availableTables = getTablesByStatus('available');
-  const serviceTables = getTablesByStatus('needs_service');
+  // Filter only tables with QR codes
+  const tablesWithQR = tables.filter(table => table.hasQRCode);
+  const occupiedTables = getTablesByStatus('occupied').filter(table => table.hasQRCode);
+  const availableTables = getTablesByStatus('available').filter(table => table.hasQRCode);
+  const serviceTables = getTablesByStatus('needs_service').filter(table => table.hasQRCode);
   const pendingCalls = calls.filter(call => call.status === 'pending');
   const urgentCalls = calls.filter(call => call.priority === 'urgent' && call.status === 'pending');
 
@@ -165,16 +167,16 @@ const Staff: React.FC = () => {
           {/* Tables Section */}
           <div className="xl:col-span-3 space-y-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-bold">Mesas (25)</h2>
+              <h2 className="text-xl font-bold">Mesas com QR Code ({tablesWithQR.length})</h2>
               <div className="text-sm text-muted-foreground">
-                Ocupação: {Math.round((occupiedTables.length / tables.length) * 100)}%
+                Ocupação: {Math.round((occupiedTables.length / tablesWithQR.length) * 100)}%
               </div>
             </div>
 
             {/* Tables Grid */}
             {viewMode === 'grid' ? (
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-                {tables.map((table) => (
+                {tablesWithQR.map((table) => (
                   <TableTile
                     key={table.id}
                     table={table}
@@ -184,7 +186,7 @@ const Staff: React.FC = () => {
               </div>
             ) : (
               <div className="space-y-2">
-                {tables.map((table) => (
+                {tablesWithQR.map((table) => (
                   <Card 
                     key={table.id} 
                     variant="interactive"
@@ -208,7 +210,7 @@ const Staff: React.FC = () => {
                         {table.status === 'reserved' && 'Reservada'}
                       </Badge>
                       <div className="text-sm text-muted-foreground">
-                        {table.capacity} lugares - Seção {table.section}
+                        {table.capacity} lugares - Seção {table.section} - QR Ativo
                       </div>
                     </div>
                     
